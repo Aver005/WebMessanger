@@ -7,6 +7,7 @@ import { RoomEventType } from '@/types/Events';
 
 export interface Storage 
 {
+    selectedTab: string,
     selectedRoom: number,
     rooms: any[];
     directs: any[];
@@ -15,6 +16,7 @@ export interface Storage
 
 const StorageContext = createContext<Storage | undefined>(
 {
+    selectedTab: '',
     selectedRoom: 1,
     rooms: [],
     directs: [],
@@ -25,6 +27,8 @@ export const StorageProvider: React.FC<any> = ({ children }) =>
 {
     const events = useEvents();
     const [selectedRoom, setSelectedRoom] = useState(1);
+    const [selectedTab, setSelectedTab] = useState('Главная');
+
     const [rooms, setRooms] = useState([
         {
             id: 1,
@@ -83,6 +87,7 @@ export const StorageProvider: React.FC<any> = ({ children }) =>
 
     const storage: Storage =
     {
+        selectedTab: selectedTab,
         selectedRoom: selectedRoom,
         rooms: rooms,
         directs: [],
@@ -116,14 +121,18 @@ export const StorageProvider: React.FC<any> = ({ children }) =>
             events?.emit(EventType.MESSAGE_SEND, {...newEvent});
         };
 
+        const onInitTab = (data: any) => setSelectedTab(data.tab);
+
         events?.on(EventType.PICK_ROOM, onPickRoom);
         events?.on(EventType.CREATE_ROOM, onCreateRoom);
         events?.on(EventType.SEND_MESSAGE, onSendMessage);
+        events?.on(EventType.INIT_SELECTED_TAB, onInitTab);
 
         return () => 
         {
             events?.off(EventType.PICK_ROOM, onPickRoom);
             events?.off(EventType.CREATE_ROOM, onCreateRoom);
+            events?.off(EventType.INIT_SELECTED_TAB, onInitTab);
         }
     }, 
     [rooms, selectedRoom]);

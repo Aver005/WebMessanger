@@ -7,6 +7,10 @@ export enum EventType
     CALL_CREATE_ROOM,
     CALL_USER_PROFILE,
     CALL_USER_INVITE,
+    CALL_NOTIFICATIONS,
+    CALL_PINS,
+    CALL_MESSAGE_SEARCH,
+    CALL_ROOM_PROFILE,
     PICK_ROOM,
     CREATE_ROOM,
     SEND_MESSAGE,
@@ -14,9 +18,7 @@ export enum EventType
     ROOM_REMOVED,
     ROOM_PICKED,
     MESSAGE_SEND,
-    // Добавьте ваши типы событий здесь, например:
-    // USER_LOGGED_IN,
-    // ITEM_ADDED_TO_CART,
+    INIT_SELECTED_TAB,
 }
 
 export interface EventHandler 

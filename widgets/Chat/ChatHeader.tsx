@@ -11,6 +11,7 @@ const ChatHeaderContainer = styled.div`
     padding: 15px;
     background-color: #f4f4f4;
     border-left: 1px solid #eee;
+    width: 100%;
 `;
 
 const ChatTitle = styled.div`
@@ -31,18 +32,24 @@ const ChatActions = styled.div`
 const ChatHeader: React.FC<any> = ({title}) => 
 { 
     const events = useEvents();
-    const handleInviteClick = () => events?.emit(EventType.CALL_USER_INVITE, {name: "Комната 1"});
+
+    const chevron = 
+        (e: any) => events?.emit(EventType.CALL_ROOM_PROFILE, {triggerElement: e.target});
+    const invite = 
+        () => events?.emit(EventType.CALL_USER_INVITE, {name: "Комната 1"});
+    const search = 
+        (e: any) => events?.emit(EventType.CALL_MESSAGE_SEARCH, {triggerElement: e.target});
 
     return (
         <ChatHeaderContainer>
             <ChatTitle>
                 <strong>{title}</strong>
-                <IconButton icon={faChevronDown} />
+                <IconButton onClick={chevron} icon={faChevronDown} />
             </ChatTitle>
             <ChatActions>
-                <IconButton onClick={handleInviteClick} icon={faUserPlus} />
+                <IconButton onClick={invite} icon={faUserPlus} />
                 <IconButton icon={faPhone} />
-                <IconButton icon={faSearch} />
+                <IconButton onClick={search} icon={faSearch} />
                 <IconButton icon={faEllipsisVertical} />
             </ChatActions>
         </ChatHeaderContainer>

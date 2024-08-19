@@ -80,7 +80,7 @@ export interface Chat
     isSelected?: boolean;
 }
 
-const ChatList = () => 
+const ChatList: React.FC<any> = ({title, ...props}) => 
 {
     const events = useEvents();
     const storage = useStorage();
@@ -92,7 +92,7 @@ const ChatList = () =>
     return (
         <ChatListContainer>
             <ChatListHeader>
-                <strong>Список комнат</strong>
+                <strong>{title || 'Список комнат'}</strong>
                 <ChatListHeaderActions>
                     <IconButton icon={faFilter} />
                     <IconButton onClick={handleCreateRoom} icon={faPlus} />

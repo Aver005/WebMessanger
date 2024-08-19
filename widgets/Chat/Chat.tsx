@@ -11,7 +11,7 @@ const ChatContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
-    max-width: 100%;
+    width: 100%;
     overflow-y: hidden;
 `;
 
@@ -35,7 +35,7 @@ interface Message
     avatarSrc?: string;
 }
 
-const Chat: React.FC<any> = ({...props}) => 
+const Chat: React.FC = () => 
 {
     const storage = useStorage();
     const events = useEvents();
@@ -45,9 +45,8 @@ const Chat: React.FC<any> = ({...props}) =>
 
     const chat = useMemo(() => {
         return storage?.rooms.find((room: any) => room.id === storage?.selectedRoom);
-      }, [storage?.rooms, storage?.selectedRoom]);
+    }, [storage?.rooms, storage?.selectedRoom]);
 
-    // const [chat, setChat] = useState<any>(findRoom(storage?.selectedRoom || 1));
     const [newMessage, setNewMessage] = useState('');
 
     const handleSendMessage = () => 
@@ -80,9 +79,6 @@ const Chat: React.FC<any> = ({...props}) =>
         if (!container) return;
         setShouldScrollToBottom(container.scrollTop + container.clientHeight >= container.scrollHeight);
     };
-
-    // useEffect(() => setChat(findRoom(storage?.selectedRoom || 1)), [storage?.selectedRoom]);
-    // useEffect(() => setChat(findRoom(storage?.selectedRoom || 1)), [storage?.rooms]);
 
     return (
         <>
